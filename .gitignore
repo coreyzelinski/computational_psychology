@@ -1,0 +1,182 @@
+# ===================================================
+# github.com/coreyzelinski/artificial_intelligence
+# /.gitignore
+#
+# Corey Zelinski <corey.zelinski@ieee.org>
+# 2025-02-19 - AI/ML workflow .gitignore
+# ===================================================
+
+# compiled models
+
+*.so
+*.o
+*.a
+*.dylib
+*.dll
+*.h5
+*.onnx
+*.tflite
+*.pt
+*.pb
+*.pkl
+*.ckpt
+*.joblib
+
+# python
+
+__pypackages__/
+__pycache__/
+*.py[cod]
+*$py.class
+.pybuilder/
+.pytest_cache/
+.pytype/
+.pyre/
+.Python
+.pypirc
+.Renviron
+
+# R language
+
+.Rproj.user/
+.Rhistory
+.Rapp.history
+.RDataTmp
+.Ruserdata
+.Renviron
+.httr-oauth
+*.Rcheck/
+*-Ex.R
+
+# SPSS output & syntax
+
+#*.sbs   
+*.sav    
+*.zsav    
+*.por    
+*.spo      
+*.spv      
+*.sps      
+*.jnl     
+*.log    
+*.err      
+*.res    
+*.bak     
+*.tmp      
+*.stt           
+
+# build artifacts
+
+[Oo]bj/
+[Bb]in/
+build/
+dist/
+downloads/
+.eggs/
+*.egg-info/
+develop-eggs/
+site/
+wheels/
+pip-wheel-metadata/
+parts/
+lib/
+lib64/
+sdist/
+var/
+cython_debug/
+
+# GPU / CUDA artifacts
+
+*.i
+*.ii
+*.gpu
+*.ptx
+*.cubin
+*.fatbin 
+*.nv_fatbin    
+*.nvvmir    
+*.sass    
+*.cudafe*  
+*.clbin       
+*.cl.pch     
+*.clt         
+*.clog        
+*.il          
+*.spv        
+*.glsl        
+*.metal        
+*.air        
+*.dxbc        
+*.dxil  
+
+# ML data & caches
+ 
+#*.csv
+*.npy      
+*.npz        
+*.tsv
+*.hdf5     
+db.sqlite3
+db.sqlite3-journal
+output/*
+profile_default/
+datasets/
+data/
+preprocessed_data/
+cache/
+cache/* 
+
+# virtualenv
+
+.env
+.venv
+ENV/
+env.bak/
+venv.bak/
+conda_env/
+.conda/ 
+
+# logs
+
+checkpoint/
+*.ckpt.index
+*.ckpt.data*
+*.pbtxt
+*.event*
+tensorboard/
+tb_logs/
+tb_debug/
+tfevents.out.*
+/logs/
+*.log
+*.manifest
+*.spec
+*.sage.py
+MANIFEST 
+
+# docs
+
+**/ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+.vignettes/*.html
+.vignettes/*.pdf
+docs/_build/
+.jupyter/
+docs/
+po/*~
+
+# deployment
+
+exported_models/
+torchscript_models/
+tf_serving/
+
+# credentials
+
+id_rsa
+id_rsa.pub
+*.pem
+*.crt
+*.key
+*.enc
+*.lic
