@@ -13,7 +13,7 @@
 #
 #  Author: Corey Vincent Zelinski
 #  Email:  Corey.Zelinski@IEEE.org
-#  © 2024-2025 Corey Vincent Zelinski. All rights reserved.
+#  (C) Copyright 2024-2025 Corey Vincent Zelinski. All rights reserved.
 # =============================================================================
 
 from model_engine.event_modulation import QUpdater

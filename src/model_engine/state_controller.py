@@ -13,7 +13,7 @@
 #
 #  Author: Corey Vincent Zelinski
 #  Email:  Corey.Zelinski@IEEE.org
-#  © 2025 Corey Vincent Zelinski. All rights reserved.
+#  (C) Copyright 2025 Corey Vincent Zelinski. All rights reserved.
 # =============================================================================
 
 from model_engine.bayes_markov import BayesianUpdater
