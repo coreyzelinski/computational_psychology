@@ -1,10 +1,10 @@
 
 # A Bayesian Hybrid AI Computational Model for Behavioral Prediction
 
-**Author:** Corey Vincent Zelinski
-*Institute of Electrical and Electronics Engineers*
+**Author:** Corey Vincent Zelinski, *Institute of Electrical and Electronics Engineers*
   
 **Email:** Corey.Zelinski@IEEE.org 
+
 **(C) Copyright 2024–2025 Corey Vincent Zelinski. All rights reserved.**
 
 ---
