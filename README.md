@@ -117,9 +117,9 @@ This matrix evolves based on empirical data and reinforcement adjustments.
 
 3. Compute the **next transition probabilities** using *Q*-learning:
 
-   $$
-   Q(s,a) \leftarrow Q(s,a) + \alpha \left[ r + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
-   $$
+$$
+Q(s,a) \leftarrow Q(s,a) + \alpha \left[ r + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
+$$
    
    Where:
 
