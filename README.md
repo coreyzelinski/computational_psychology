@@ -1,8 +1,10 @@
 
 # A Bayesian Hybrid AI Computational Model for Behavioral Prediction
 
-**Author:** Corey Vincent Zelinski  
-**Email:** Corey.Zelinski@IEEE.org   
+**Author:** Corey Vincent Zelinski
+*Institute of Electrical and Electronics Engineers*
+  
+**Email:** Corey.Zelinski@IEEE.org 
 **(C) Copyright 2024–2025 Corey Vincent Zelinski. All rights reserved.**
 
 ---
@@ -44,7 +46,7 @@ The computational model is reinforced independently by a suite of mathematical c
 
 These components allow the model to capture short-term shifts in dyadic-interactive comportment, long-term symbolic memory traces, and state-change patterns. Used in synergy, these provide a unified diagnostic framework for empirical dynamics in social or memory-reactive dyadic systems.
 
---
+---
 
 ## Current Status
 
@@ -193,7 +195,6 @@ $$
 - `notebooks/affective_fft_model.ipynb`: Visualization + FFT diagnostics
 - `test_*.py`: Sanity checks for each module
 
-- 
 
 ## License
 
