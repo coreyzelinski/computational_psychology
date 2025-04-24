@@ -138,9 +138,10 @@ This guides transition probabilities based on reinforcement.
 
 4. Apply the **softmax function** to generate the updated transition probabilities:
 
-   $$
-   P(a|s) = \frac{\exp(Q(s,a)/\tau)}{\sum_b \exp(Q(s,b)/\tau)}
-   $$
+
+$$
+P(a|s) = \frac{\exp(Q(s,a)/\tau)}{\sum_b \exp(Q(s,b)/\tau)}
+$$
 
 
 Where:
