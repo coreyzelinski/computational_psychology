@@ -15,26 +15,77 @@ This repository presents a hybrid computational model integrating **Bayesian inf
 
 ## Abstract
 
-This model enables iterative probabilistic updates of dyadic-interactive likelihoods (via Bayesian filtering) and adaptive learning from past interactions (via reinforcement learning). We compare the hybrid approach to traditional Markov-based probability matrices and demonstrate that combining probabilistic reasoning with adaptive learning improves prediction accuracy.
+This model enables iterative probabilistic updates of dyadic-interactive likelihoods (via Bayesian filtering) and adaptive learning from past interactions (via reinforcement learning). We compare the hybrid approach to traditional Markov-based probability matrices and demonstrate that combining probabilistic reasoning with adaptive learning improves prediction accuracy. The computational framework includes a hybrid predictive system that integrates Bayesian state inference, reinforcement learning (**RL**), and Markovian transition logic to model engagement dynamics in attachment-informed behavioral systems. Iterative Bayesian updates allow belief revision based on new interaction signals, while reinforcement learning adjusts transition strategies based on empirical rewards over time.
 
 The model includes:
 - **Probability Generating Function (PGF)** for discrete transitions
 - **Continuous Generating Function (CGF)** to account for engagement decay over time
 - **Latent-State Model (LSM)** for independent validation
 
+In addition to its core probabilistic engine, the model supports auxiliary formulations for extended analysis:
+- **Probability Generating Function (PGF)** — characterizes discrete state transitions
+- **Cumulant Generating Function (CGF)** — introduces time-decaying memory via fractional-order derivatives
+- **Latent-State Model (LSM)** — provides an independent representational layer for latent-state resurfacing estimate
+- **Spectral Analysis (FFT)** — identifies periodic or symbolic-interactive spikes in belief trajectories
+- **Stochastic Differential Equation (SDE)** — governs continuous-time variability in transition dynamics via empirical noise injection
+- **Fractional Langevin Equation (FLE)** — models long-memory symbolic dynamics through fractional-order inertia and stochastic forcing terms, affecting delayed symbolic influence on state likelihoods
+
+---
+
+## Analytical Formulations and Extended Diagnostics
+
+The computational model is reinforced independently by a suite of mathematical constructs and formulations:
+
+- **PGF and CGF** model engagement transitions through discrete and continuous temporal structures, modeling decay and symbolic influence on state likelihoods
+- The **Latent-State Model (LSM)** provides an orthogonal validation layer, reflecting symbolic and unobserved states that may influence observed human behavior
+- **Fast Fourier Transform (FFT)** analysis is applied to posterior trajectories to project or describe cyclical behavioral signals, symbolic periodicities, and phase-delayed behavioral cues
+- The **Stochastic Differential Equation (SDE)** component introduces empirical fluctuation dynamics through the realization of a Wiener process, reflecting natural engagement noise
+- The **Fractional Langevin Equation (FLE)** encodes symbolic inertia and memory effects, extending the CGF layer with fractional-order kinetic terms and noise coupling
+
+These components allow the model to capture short-term shifts in dyadic-interactive comportment, long-term symbolic memory traces, and state-change patterns. Used in synergy, these provide a unified diagnostic framework for empirical dynamics in social or memory-reactive dyadic systems.
+
+--
+
+## Current Status
+
+- Core algorithm complete (AI model in python code + Jupyter notebook)
+- Visualization and time-domain simulation working
+- First-iteration inclusion of FFT spectral analysis
+- AMA-formatted paper and LaTeX doc provides full mathematical description
+
+---
+
+## TODO: Integrodifferential Refactor and Model Tier Consolidation
+
+- Refactor the existing hybrid architecture to consolidate all continuous-time dynamics (currently partitioned across the cumulant generating function, fatigue decay, and symbolic response latency) into a unified **integrodifferential equation (IDE)** framework.
+- Formalize an **IDE-based state propagation mechanism** capable of simultaneously capturing:
+  - Local probabilistic transitions (Markovian and RL-informed)
+  - Long-range memory or habituation effects (e.g., affective fatigue)
+  - Nonlocal symbolic activations (e.g., Dirac-style or spike-recalled states)
+- Design the IDE such that it expresses a **convolution kernel over symbolic input history**, leveraging:
+  - Recursive empirical reweighting
+  - Stochastic re-entry dynamics
+  - And transition shaping via fatigue or signal attenuation
+- Replace currently disjoint CGF/PGF/LSM layers with an **integrated 3-tier model**:
+  1. **Discrete Tier** — Probabilistic Bayesian state transitions and Q-learning logic
+  2. **Continuous Tier** — Time-extended fatigue and symbolic decay (modeled via IDE)
+  3. **Latent Tier** — Symbolic representations mapped into parameterized interactive windows (Dirac peaks, symbolic lags)
+
+This refactor aims to reduce representational fragmentation and permit **ODE/PDE-style numerical solving** in future simulation stages, enabling deeper convergence diagnostics and eventual differential identity tracking for symbolic parameterization.
+
 ---
 
 ## Interactive State Definitions
 
-Let \( S = \{S_0, S_1, S_2, S_3, S_4\} \) represent five discrete behavioral states:
+Let S = {S₀, S₁, S₂, S₃, S₄} represent five discrete behavioral states:
 
 | State | Description |
 |-------|-------------|
-| \( S_0 \) | **State 0** |
-| \( S_1 \) | **State 1**  |
-| \( S_2 \) | **State 2**  |
-| \( S_3 \) | **State 3** |
-| \( S_4 \) | **State 4** |
+| S₀ | **State 0** |
+| S₁ | **State 1**  |
+| S₂ | **State 2**  |
+| S₃ | **State 3** |
+| S₄ | **State 4** |
 
 ---
 
@@ -42,31 +93,29 @@ Let \( S = \{S_0, S_1, S_2, S_3, S_4\} \) represent five discrete behavioral sta
 
 The model proceeds in the following steps:
 
-1. Identify the **current state** \( S_t \)
+1. Identify the **current state** Sₜ
 
-2. Retrieve the **current transition matrix** \( P \)
+2. Retrieve the **current transition matrix** *P*
 
-The Markov transition matrix \( P \) is defined as:
+The Markov transition matrix *P* is defined as:
 
-\[
-P = 
-\begin{bmatrix}
-p_{00} & p_{01} & p_{02} & p_{03} & p_{04} \\
-p_{10} & p_{11} & p_{12} & p_{13} & p_{14} \\
-p_{20} & p_{21} & p_{22} & p_{23} & p_{24} \\
-p_{30} & p_{31} & p_{32} & p_{33} & p_{34} \\
-p_{40} & p_{41} & p_{42} & p_{43} & p_{44}
-\end{bmatrix}
-\]
+| *P*     | S₀   | S₁   | S₂   | S₃   | S₄   |
+|--------|------|------|------|------|------|
+| **S₀** | p₀₀ | p₀₁ | p₀₂ | p₀₃ | p₀₄ |
+| **S₁** | p₁₀ | p₁₁ | p₁₂ | p₁₃ | p₁₄ |
+| **S₂** | p₂₀ | p₂₁ | p₂₂ | p₂₃ | p₂₄ |
+| **S₃** | p₃₀ | p₃₁ | p₃₂ | p₃₃ | p₃₄ |
+| **S₄** | p₄₀ | p₄₁ | p₄₂ | p₄₃ | p₄₄ |
 
 Each row sums to 1:  
-\[
+
+$$
 \sum_j p_{ij} = 1 \quad \text{for all } i
-\]
+$$
 
 This matrix evolves based on empirical data and reinforcement adjustments.
 
-3. Compute the **next transition probabilities** using \( Q \)-learning:
+3. Compute the **next transition probabilities** using *Q*-learning:
 
    $$
    Q(s,a) \leftarrow Q(s,a) + \alpha \left[ r + \gamma \max_{a'} Q(s',a') - Q(s,a) \right]
@@ -74,15 +123,16 @@ This matrix evolves based on empirical data and reinforcement adjustments.
    
    Where:
 
-- \( \alpha \): learning rate
-- \( \gamma \): discount factor
-- \( r \): reward signal
-- \( s' \): next predicted state
+- α: learning rate
+- γ: discount factor
+- *r*: reward signal
+- *s*′: next predicted state
 
 Define:
-\[
-\Delta Q = r + \gamma \max_{a'} Q(s',a') - Q(s,a)
-\]
+
+   $$
+   \Delta Q = r + \gamma \max_{a'} Q(s',a') - Q(s,a)
+   $$
 
 This guides transition probabilities based on reinforcement.
 
@@ -94,49 +144,42 @@ This guides transition probabilities based on reinforcement.
 
 
 Where:
-- \( \tau \): temperature parameter controlling exploration (low \( \tau \) = sharper preference)
+- τ: temperature parameter controlling exploration (low τ = sharper preference)
 
 **Example**:  
-If \( Q_{12} = 2.5, Q_{13} = 1.2, Q_{14} = 0.8 \), then:
 
-\[
+If Q₁₂ = 2.5, Q₁₃ = 1.2, Q₁₄ = 0.8, then:
+
+$$
 P_{12} = \frac{\exp(2.5 / \tau)}{\exp(2.5 / \tau) + \exp(1.2 / \tau) + \exp(0.8 / \tau)}
-\]
+$$
 
 5. Introduce **stochastic variability**
 
 To prevent overfitting and reflect empirical volatility:
 
-\[
+$$
 dP_{ij} = \beta \left( \frac{\exp(Q_{ij} / \tau)}{\sum_k \exp(Q_{ik} / \tau)} - P_{ij} \right) dt + \sigma dW_{ij}
-\]
+$$
 
 Where:
-- \( \beta \): transition rate adaptation coefficient
-- \( \sigma dW_{ij} \): stochastic noise (Wiener process component)
+
+- β: transition rate adaptation coefficient  
+- σ·dWᵢⱼ: stochastic noise (Wiener process component)
 
 This keeps transitions dynamic and empirically sensitive to external perturbations.
 
-6. Update transition matrix \( P \) for the next cycle
+6. Update transition matrix *P* for the next cycle
 
 ---
 
 ## Belief Update (Bayesian Filtering)
 
 Beliefs are updated with incoming observations:
+
 $$
 P(H_i \mid E) = \frac{P(E \mid H_i) P(H_i)}{\sum_j P(E \mid H_j) P(H_j)}
 $$
-
----
-
-## Spectral and Latent-State Extensions
-
-The model is extended via:
-- **Probabilistic Generating Function (PGF)**: captures discrete probabilistic transitions
-- **Cumulant Generating Function (CGF)**: integrates long-range decay via fractional derivatives
-- **Latent-State Modeling (LSM)**: latent layer for independent validation of modeled dynamics
-- **Fast Fourier Transform (FFT) Analysis**: time-domain reactivation detection via spectral energy peaks
 
 ---
 
@@ -149,16 +192,7 @@ The model is extended via:
 - `notebooks/affective_fft_model.ipynb`: Visualization + FFT diagnostics
 - `test_*.py`: Sanity checks for each module
 
----
-
-## Status
-
-- Core algorithm complete
-- Visualization and time-domain simulation working
-- First-iteration inclusion of FFT spectral analysis
-- AMA-formatted paper and LaTeX doc provides full mathematical description
-
----
+- 
 
 ## License
 
