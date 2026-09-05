@@ -36,12 +36,32 @@ class QUpdater:
         if int(num_states) != num_states or num_states <= 0:
             raise ValueError("num_states must be a positive integer.")
 
+        alpha = float(alpha)
+        gamma = float(gamma)
+        if not np.isfinite(alpha):
+            raise ValueError("alpha must be finite.")
+        if not np.isfinite(gamma):
+            raise ValueError("gamma must be finite.")
+
         self.num_states = int(num_states)
-        self.alpha = float(alpha)
-        self.gamma = float(gamma)
+        self.alpha = alpha
+        self.gamma = gamma
         self.q_table = np.zeros(
             (self.num_states, self.num_states), dtype=np.float64
         )
+
+    def _validate_state_index(self, value, label):
+        if isinstance(value, (bool, np.bool_)):
+            raise ValueError(f"{label} must be an integer state index.")
+        try:
+            index = int(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(f"{label} must be an integer state index.") from exc
+        if index != value or not 0 <= index < self.num_states:
+            raise ValueError(
+                f"{label} must be an integer in [0, {self.num_states - 1}]."
+            )
+        return index
 
     def update(self, s, a, r, s_next):
         """
@@ -53,10 +73,20 @@ class QUpdater:
             r (float): Observed reward
             s_next (int): Resulting state after transition
         """
+        s = self._validate_state_index(s, "s")
+        a = self._validate_state_index(a, "a")
+        s_next = self._validate_state_index(s_next, "s_next")
+        r = float(r)
+        if not np.isfinite(r):
+            raise ValueError("r must be finite.")
+
         max_q_next = np.max(self.q_table[s_next])
         old_value = self.q_table[s, a]
         td_target = r + self.gamma * max_q_next
-        self.q_table[s, a] = old_value + self.alpha * (td_target - old_value)
+        updated_value = old_value + self.alpha * (td_target - old_value)
+        if not np.isfinite(updated_value):
+            raise ValueError("Q-learning update produced a non-finite value.")
+        self.q_table[s, a] = updated_value
 
     @staticmethod
     def _validate_policy_parameters(tau, sigma, dt):
@@ -96,6 +126,7 @@ class QUpdater:
         Returns:
             np.array: Softmax-normalized vector of transition probabilities
         """
+        state = self._validate_state_index(state, "state")
         tau, sigma, dt = self._validate_policy_parameters(tau, sigma, dt)
         q_values = np.asarray(self.q_table[state], dtype=np.float64)
 
