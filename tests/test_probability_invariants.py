@@ -87,6 +87,31 @@ class TransitionInvariantTests(unittest.TestCase):
             np.allclose(np.sum(matrix, axis=1), np.ones(5))
         )
 
+    def test_negative_state_index_rejected(self):
+        updater = QUpdater(num_states=3)
+        with self.assertRaises(ValueError):
+            updater.get_softmax_policy(-1)
+        with self.assertRaises(ValueError):
+            updater.update(s=-1, a=0, r=1.0, s_next=1)
+
+    def test_out_of_range_state_index_rejected(self):
+        updater = QUpdater(num_states=3)
+        with self.assertRaises(ValueError):
+            updater.update(s=0, a=3, r=1.0, s_next=1)
+
+    def test_non_finite_reward_rejected_without_mutating_q_table(self):
+        updater = QUpdater(num_states=3)
+        before = updater.q_table.copy()
+        with self.assertRaises(ValueError):
+            updater.update(s=0, a=1, r=np.nan, s_next=2)
+        self.assertTrue(np.array_equal(updater.q_table, before))
+
+    def test_non_finite_learning_parameters_rejected(self):
+        with self.assertRaises(ValueError):
+            QUpdater(num_states=3, alpha=np.nan)
+        with self.assertRaises(ValueError):
+            QUpdater(num_states=3, gamma=np.inf)
+
 
 if __name__ == "__main__":
     unittest.main()
