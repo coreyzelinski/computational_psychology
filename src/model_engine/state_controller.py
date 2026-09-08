@@ -68,7 +68,12 @@ class HybridBehavioralModel:
 
     def run_step(self, likelihoods, s, a, r, s_next):
         """
-        Run full update cycle (Bayesian update + RL update + policy prediction)
+        Run one atomic Bayesian/RL/policy update cycle.
+
+        If any stage rejects its inputs or cannot produce a valid policy, restore
+        the Bayesian belief and Q-table to their pre-step values so callers never
+        observe a partially committed simulation step.
+
         ARGUMENTS
             likelihoods, Observed evidence
             s, Current state
@@ -78,7 +83,16 @@ class HybridBehavioralModel:
         OUTPUTS
             posterior, predicted_probs - Belief vector and softmax policy
         """
-        posterior = self.observe(likelihoods)
-        self.reinforce(s, a, r, s_next)
-        predicted_probs = self.predict_next_state(s)
+        prior_before = self.bayes.prior.copy()
+        q_table_before = self.q_updater.q_table.copy()
+
+        try:
+            posterior = self.observe(likelihoods)
+            self.reinforce(s, a, r, s_next)
+            predicted_probs = self.predict_next_state(s)
+        except Exception:
+            self.bayes.prior = prior_before
+            self.q_updater.q_table[...] = q_table_before
+            raise
+
         return posterior, predicted_probs
