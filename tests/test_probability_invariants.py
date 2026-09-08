@@ -9,6 +9,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from model_engine.bayes_markov import BayesianUpdater
 from model_engine.event_modulation import QUpdater
+from model_engine.state_controller import HybridBehavioralModel
 
 
 class BayesianInvariantTests(unittest.TestCase):
@@ -111,6 +112,44 @@ class TransitionInvariantTests(unittest.TestCase):
             QUpdater(num_states=3, alpha=np.nan)
         with self.assertRaises(ValueError):
             QUpdater(num_states=3, gamma=np.inf)
+
+
+class HybridStepInvariantTests(unittest.TestCase):
+    def setUp(self):
+        self.model = HybridBehavioralModel([0.5, 0.5])
+
+    def test_failed_reinforcement_rolls_back_bayesian_update(self):
+        prior_before = self.model.bayes.prior.copy()
+        q_before = self.model.q_updater.q_table.copy()
+
+        with self.assertRaises(ValueError):
+            self.model.run_step(
+                likelihoods=[0.8, 0.2],
+                s=0,
+                a=1,
+                r=np.nan,
+                s_next=1,
+            )
+
+        self.assertTrue(np.array_equal(self.model.bayes.prior, prior_before))
+        self.assertTrue(np.array_equal(self.model.q_updater.q_table, q_before))
+
+    def test_failed_policy_rolls_back_bayesian_and_q_updates(self):
+        prior_before = self.model.bayes.prior.copy()
+        q_before = self.model.q_updater.q_table.copy()
+        self.model.tau = 0
+
+        with self.assertRaises(ValueError):
+            self.model.run_step(
+                likelihoods=[0.8, 0.2],
+                s=0,
+                a=1,
+                r=1.0,
+                s_next=1,
+            )
+
+        self.assertTrue(np.array_equal(self.model.bayes.prior, prior_before))
+        self.assertTrue(np.array_equal(self.model.q_updater.q_table, q_before))
 
 
 if __name__ == "__main__":
